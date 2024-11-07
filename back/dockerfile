@@ -1,0 +1,36 @@
+# ビルドステージ
+FROM eclipse-temurin:17-jdk-focal AS build
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# Gradleファイルをコピー
+COPY gradle ./gradle
+COPY gradlew build.gradle settings.gradle ./
+
+# Gradleラッパーに実行権限を付与
+RUN chmod +x ./gradlew
+
+# ソースコードをコピー
+COPY src ./src
+
+# Gradle Wrapperでビルド
+RUN ./gradlew build --no-daemon
+
+# 実行ステージ
+FROM eclipse-temurin:17-jre-focal
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# ビルドステージからJARファイルをコピー
+COPY --from=build /app/build/libs/*.jar app.jar
+
+# ポート8080を公開
+EXPOSE 8080
+
+# アプリケーションを実行
+ENTRYPOINT ["java", "-jar",
+
+
+"app.jar"]
