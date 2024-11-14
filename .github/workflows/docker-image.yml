@@ -13,8 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
     - name: Build the Docker image
+      uses: actions/checkout@v4
+
       run: docker build -t back -f ./back/dockerfile ./back --tag my-image-name:$(date +%s)
 
       - name: UploadArtifact
