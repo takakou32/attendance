@@ -18,9 +18,3 @@ jobs:
 
       run: docker build -t back -f ./back/dockerfile ./back --tag my-image-name:$(date +%s)
 
-      - name: UploadArtifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: docker-build-output
-        path: ./back/docker-image.tar
-
