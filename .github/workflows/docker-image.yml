@@ -14,7 +14,7 @@ jobs:
       - name: BuildImage
         uses: docker/build-push-action@v5
         with:
-          context: ./
+          context: ./back
           file: ./back/dockerfile
           outputs: type=tar,dest=docker-image.tar
           push: false
